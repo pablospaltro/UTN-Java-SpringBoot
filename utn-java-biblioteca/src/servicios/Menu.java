@@ -17,6 +17,8 @@ public class Menu {
             System.out.println("1 | Buscar libro por Título");
             System.out.println("2 | Buscar libro por Autor");
             System.out.println("3 | Buscar libro por Género");
+            System.out.println("4 | Ver transacciones");
+            System.out.println("5 | Donar libros");
             System.out.println("0 | Salir");
             int opcion = scanner.nextInt();
             scanner.nextLine();
@@ -31,6 +33,12 @@ public class Menu {
                 case 3:
                     libroServicio.buscarLibroPorGenero();
                     break;
+                case 4:
+                    libroServicio.verTransacciones();
+                    break;
+                case 5:
+                    libroServicio.donarLibros();
+                    break;
                 case 0:
                     System.out.println("Saliendo...\nHasta pronto!");
                     volverAlMenu=false;
@@ -42,8 +50,4 @@ public class Menu {
 
         } while (volverAlMenu);
     }
-
-
-
-
 }

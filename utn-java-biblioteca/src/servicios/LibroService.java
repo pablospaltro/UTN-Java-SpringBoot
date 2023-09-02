@@ -1,15 +1,17 @@
 package servicios;
 
 import entidades.Libro;
+import java.io.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class LibroService {
 
     Scanner scanner = new Scanner(System.in);
     ArrayList<Libro> libros = new ArrayList<Libro>();
-    ArrayList<String> registoDeTransacciones = new ArrayList<>();
+    TreeMap<Integer,String> registroDeTransacciones = new TreeMap<>();
 
     public void llenarBiblioteca() {
 
@@ -61,6 +63,7 @@ public class LibroService {
             if (libro.getTitulo().toLowerCase().contains(tituloABuscar.toLowerCase())) {
                 comprobarSiEstaDisponible(libro);
                 libroEncontrado = true;
+                pedirPrestadoLibro(libro);
             }
         }
         if (!libroEncontrado) {
@@ -76,6 +79,7 @@ public class LibroService {
             if (libro.getAutor().toLowerCase().contains(autorABuscar.toLowerCase())) {
                 comprobarSiEstaDisponible(libro);
                 libroEncontrado = true;
+                pedirPrestadoLibro(libro);
             }
         }
         if (!libroEncontrado) {
@@ -91,6 +95,7 @@ public class LibroService {
             if (libro.getGenero().toLowerCase().contains(generoABuscar.toLowerCase())) {
                 comprobarSiEstaDisponible(libro);
                 libroEncontrado = true;
+                pedirPrestadoLibro(libro);
             }
         }
         if (!libroEncontrado) {
@@ -108,12 +113,52 @@ public class LibroService {
         }
     }
 
-    public void pedirPrestadoLibro() {
+    public void pedirPrestadoLibro(Libro libro) {
+        System.out.println("Desea pedirlo? S / N");
+        String opcion = scanner.nextLine();
+
+        if(opcion.equalsIgnoreCase("s")){
+            System.out.print("Ingrese su nombre completo: ");
+            String nombreUsuario = scanner.nextLine();
+            System.out.print("Ingrese su DNI: ");
+            int dniUsuario = scanner.nextInt();
+            scanner.nextLine();
+            System.out.print("Ingrese un mail: ");
+            String mailUsuario = scanner.nextLine();
+
+            libro.setDisponibilidad(false);
+            registroDeTransacciones.add(libro.getTitulo()+"\nprestado a: \nNombre: "+nombreUsuario+"\nDNI: "+dniUsuario+"\nMail: "+mailUsuario);
+            emitirTicket(libro, nombreUsuario, dniUsuario, mailUsuario);
+            System.out.println("\n");
+        }
 
     }
 
-    public void devolverLibro() {
+    public void verTransacciones() {
 
+
+    }
+
+    public void emitirTicket (Libro libro, String nombreUsuario, int dniUsuario, String mailUsuario){
+
+        try{
+            FileWriter escritor= new FileWriter("LibroPrestadoTicket.txt");
+            BufferedWriter buffer = new BufferedWriter(escritor);
+
+            buffer.write(libro.toString());
+            buffer.newLine();
+            buffer.write("Libro prestado a: ");
+            buffer.newLine();
+            buffer.write("Nombre: "+nombreUsuario);
+            buffer.newLine();
+            buffer.write("DNI: "+String.valueOf(dniUsuario));
+            buffer.newLine();
+            buffer.write("Email: "+mailUsuario);
+
+            buffer.close();
+        } catch (IOException e){
+            System.out.println("Error al escribir en el archivo " + e.getMessage());
+        }
     }
 
 
