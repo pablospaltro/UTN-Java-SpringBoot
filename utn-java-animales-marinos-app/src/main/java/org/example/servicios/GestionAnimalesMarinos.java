@@ -10,8 +10,8 @@ public interface GestionAnimalesMarinos {
 
     public void guardarAnimal();
 
-    public void consultarSaludDeAnimal();
+    public void consultarSaludAnimalMenu();
 
-    public void interactuarConAnimal();
+    public void alimentarAnimalMenu();
 
 }
