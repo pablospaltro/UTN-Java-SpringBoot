@@ -28,6 +28,21 @@ public class MascotaControlador {
         return mascotaServicio.mostrarMensajeMascota("perro", 3);
     }
 
+    @GetMapping("/gato1")
+    public String mostrarMensajeGato1(){
+        return mascotaServicio.mostrarMensajeMascota("gato", 1);
+    }
+
+    @GetMapping("/gato2")
+    public String mostrarMensajeGato2(){
+        return mascotaServicio.mostrarMensajeMascota("gato", 2);
+    }
+
+    @GetMapping("/gato3")
+    public String mostrarMensajeGato3(){
+        return mascotaServicio.mostrarMensajeMascota("gato", 3);
+    }
+
 
 
 
