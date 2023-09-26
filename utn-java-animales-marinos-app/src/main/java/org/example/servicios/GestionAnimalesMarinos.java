@@ -8,8 +8,6 @@ public interface GestionAnimalesMarinos {
 
     public void registrarAnimalMenu();
 
-    public void guardarAnimal();
-
     public void consultarSaludAnimalMenu();
 
     public void alimentarAnimalMenu();
