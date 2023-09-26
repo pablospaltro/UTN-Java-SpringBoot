@@ -7,16 +7,16 @@ import java.util.Scanner;
 
 public class CentroRescateMDQ implements GestionAnimalesMarinos {
     Scanner scanner = new Scanner(System.in);
-    ArrayList<LoboMarino> lobosMarinos = new ArrayList<>();
-    ArrayList<Cazon> cazones = new ArrayList<>();
-    ArrayList<BallenaFranca> ballenas = new ArrayList<>();
+    ArrayList<AnimalMarino> lobosMarinos = new ArrayList<>();
+    ArrayList<AnimalMarino> cazones = new ArrayList<>();
+    ArrayList<AnimalMarino> ballenas = new ArrayList<>();
 
     public void gestionMenuPrincipal(){
 
         boolean volverAlMenu = true;
 
         System.out.println("\nC E N T R O   D E   R E S C A T E   MDQ");
-        System.out.println("proteccion de animales marinos");
+        System.out.println("Protección de animales marinos");
 
         do{
             System.out.println("\n   MENU PRINCIPAL");
@@ -25,7 +25,6 @@ public class CentroRescateMDQ implements GestionAnimalesMarinos {
             System.out.println("3 | Verificar la salud de un animal");
             System.out.println("4 | Alimentar animales");
             System.out.println("0 | Salir");
-
 
             int opcion = scanner.nextInt();
             scanner.nextLine();
@@ -44,7 +43,7 @@ public class CentroRescateMDQ implements GestionAnimalesMarinos {
                     alimentarAnimalMenu();
                     break;
                 case 0:
-                    System.out.println("Saliendo...\nAdios!");
+                    System.out.println("Saliendo...\nAdiós!");
                     volverAlMenu = false;
                     break;
             }
@@ -81,40 +80,54 @@ public class CentroRescateMDQ implements GestionAnimalesMarinos {
         } while (volverAlMenu);
     }
 
-    public void mostrarCazones(ArrayList<Cazon> cazones) {
-        if (cazones.isEmpty()) {
-            System.out.println("Aun no hay cazones ingresados");
+    public void mostrarAnimales(ArrayList<AnimalMarino> animales) {
+        if (animales.isEmpty()) {
+            System.out.println("Aun no hay animales ingresados");
         } else {
-            for (Cazon cazon : cazones) {
-                System.out.println(cazon.toString());
+            for (AnimalMarino animal : animales) {
+                System.out.println(animal.toString());
             }
         }
     }
 
-    public void mostrarLobosMarinos(ArrayList<LoboMarino> lobos) {
-        if (lobos.isEmpty()) {
-            System.out.println("Aun no hay lobos marinos ingresados");
-        } else {
-            for (LoboMarino lobo : lobos) {
-                System.out.println(lobo.toString());
-            }
+    public void mostrarCazones(ArrayList<AnimalMarino> cazones) {
+        mostrarAnimales(cazones);
+    }
+
+    public void mostrarLobosMarinos(ArrayList<AnimalMarino> lobos) {
+        mostrarAnimales(lobos);
+    }
+
+    public void mostrarBallenas(ArrayList<AnimalMarino> ballenas) {
+        mostrarAnimales(ballenas);
+    }
+
+    public void registrarAnimal(ArrayList<? super AnimalMarino> animales, TipoAnimalMarino tipoAnimal) {
+        AnimalMarino animal = null;
+
+        switch (tipoAnimal) {
+            case LOBO_MARINO:
+                animal = new LoboMarino();
+                break;
+            case CAZON:
+                animal = new Cazon();
+                break;
+            case BALLENA_FRANCA:
+                animal = new BallenaFranca();
+                break;
+            // Agrega otros tipos de animales según sea necesario
+        }
+
+        if (animal != null) {
+            animal.setTipo(tipoAnimal);
+            cargarDatosAnimal(animal);
+            animales.add(animal);
+            System.out.println("Tenemos un nuevo " + tipoAnimal + " en el Centro! Bienvenido/a, " + animal.getNombre());
+            animal.localizarMigracion();
         }
     }
 
-    public void mostrarBallenas (ArrayList<BallenaFranca> ballenas) {
-        if (ballenas.isEmpty()) {
-            System.out.println("Aun no hay ballenas ingresados");
-        } else {
-            for (BallenaFranca ballena : ballenas) {
-                System.out.println(ballena.toString());
-            }
-        }
-    }
-
-
-    @Override
     public void registrarAnimalMenu() {
-
         boolean volverAlMenu = true;
 
         do {
@@ -131,47 +144,34 @@ public class CentroRescateMDQ implements GestionAnimalesMarinos {
                     registrarLoboMarino(lobosMarinos);
                     break;
                 case 2:
-                    registrarCazones(cazones);
+                    registrarCazon(cazones);
                     break;
                 case 3:
-                    registrarBallenas(ballenas);
+                    registrarBallena(ballenas);
                     break;
                 case 0:
                     volverAlMenu = false;
+                    break;
+                default:
+                    System.out.println("Opción no válida");
                     break;
             }
         } while (volverAlMenu);
     }
 
-    public void registrarLoboMarino(ArrayList<LoboMarino> lobos){
-        LoboMarino lobo = new LoboMarino();
-        lobo.setTipo(TipoAnimalMarino.LOBO_MARINO);
-        cargarDatosAnimal(lobo);
-        lobos.add(lobo);
-        System.out.println("Tenemos un nuevo Lobo Marino en el Centro! Bienvenido/a, "+lobo.getNombre());
-        lobo.localizarMigracion();
+    public void registrarLoboMarino(ArrayList<? super AnimalMarino> lobosMarinos) {
+        registrarAnimal(lobosMarinos, TipoAnimalMarino.LOBO_MARINO);
     }
 
-    public void registrarCazones(ArrayList<Cazon> cazones){
-        Cazon cazon = new Cazon();
-        cazon.setTipo(TipoAnimalMarino.CAZON);
-        cargarDatosAnimal(cazon);
-        cazones.add(cazon);
-        System.out.println("Tenemos un nuevo Cazón en el Centro! Bienvenido/a, "+cazon.getNombre());
-        cazon.localizarMigracion();
+    public void registrarCazon(ArrayList<? super AnimalMarino> cazones) {
+        registrarAnimal(cazones, TipoAnimalMarino.CAZON);
     }
 
-    public void registrarBallenas(ArrayList<BallenaFranca> ballenas){
-        BallenaFranca ballena = new BallenaFranca();
-        ballena.setTipo(TipoAnimalMarino.BALLENA_FRANCA);
-        cargarDatosAnimal(ballena);
-        ballenas.add(ballena);
-        System.out.println("\nTenemos una nueva Ballena Franca en el Centro! Bienvenido/a, "+ballena.getNombre()+"! \n");
-        ballena.localizarMigracion();
+    public void registrarBallena(ArrayList<? super AnimalMarino> ballenas) {
+        registrarAnimal(ballenas, TipoAnimalMarino.BALLENA_FRANCA);
     }
 
-    public void cargarDatosAnimal(AnimalMarino animal){
-
+    public void cargarDatosAnimal(AnimalMarino animal) {
         System.out.println("Nombre: ");
         animal.setNombre(scanner.nextLine());
         System.out.println("Edad: ");
@@ -183,12 +183,11 @@ public class CentroRescateMDQ implements GestionAnimalesMarinos {
 
     @Override
     public void guardarAnimal() {
-
+        // Implementa la lógica para guardar animales
     }
 
     @Override
     public void consultarSaludAnimalMenu() {
-
         boolean volverAlMenu = true;
 
         do {
@@ -202,48 +201,32 @@ public class CentroRescateMDQ implements GestionAnimalesMarinos {
 
             switch (opcion) {
                 case 1:
-                    consultarSaludLoboMarino(lobosMarinos);
+                    consultarSaludAnimales(lobosMarinos);
                     break;
                 case 2:
-                    consultarSaludCazon(cazones);
+                    consultarSaludAnimales(cazones);
                     break;
                 case 3:
-                    consultarSaludBallena(ballenas);
+                    consultarSaludAnimales(ballenas);
                     break;
                 case 0:
                     volverAlMenu = false;
                     break;
+                default:
+                    System.out.println("Opción no válida");
+                    break;
             }
         } while (volverAlMenu);
-
-
-
     }
 
-    public void consultarSaludLoboMarino(ArrayList<LoboMarino> lobos){
-
-        for(LoboMarino lobo : lobos){
-            System.out.println("Nombre: "+lobo.getNombre()+"\nEstado de salud: "+lobo.getEstadoDeSalud());
-        }
-    }
-
-    public void consultarSaludCazon(ArrayList<Cazon> cazones){
-
-        for(Cazon cazon : cazones){
-            System.out.println("Nombre: "+cazon.getNombre()+"\nEstado de salud: "+cazon.getEstadoDeSalud());
-        }
-    }
-
-    public void consultarSaludBallena(ArrayList<BallenaFranca> ballenas){
-
-        for(BallenaFranca ballena : ballenas){
-            System.out.println("Nombre: "+ballena.getNombre()+"\nEstado de salud: "+ballena.getEstadoDeSalud());
+    public void consultarSaludAnimales(ArrayList<? extends AnimalMarino> animales) {
+        for (AnimalMarino animal : animales) {
+            System.out.println("Nombre: " + animal.getNombre() + "\nEstado de salud: " + animal.getEstadoDeSalud());
         }
     }
 
     @Override
     public void alimentarAnimalMenu() {
-
         boolean volverAlMenu = true;
 
         do {
@@ -268,6 +251,9 @@ public class CentroRescateMDQ implements GestionAnimalesMarinos {
                 case 0:
                     volverAlMenu = false;
                     break;
+                default:
+                    System.out.println("Opción no válida");
+                    break;
             }
         } while (volverAlMenu);
     }
@@ -286,6 +272,4 @@ public class CentroRescateMDQ implements GestionAnimalesMarinos {
         System.out.println("Alimentando ballenas...");
         System.out.println("Se pusieron contentas :)");
     }
-
-
 }

@@ -53,4 +53,13 @@ public class AnimalMarino {
 
     }
 
+    @Override
+    public String toString() {
+        return "AnimalMarino{" +
+                "nombre='" + nombre + '\'' +
+                ", tipo=" + tipo +
+                ", edad=" + edad +
+                ", estadoDeSalud='" + estadoDeSalud + '\'' +
+                '}';
+    }
 }
