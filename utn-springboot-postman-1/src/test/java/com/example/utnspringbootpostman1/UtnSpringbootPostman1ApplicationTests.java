@@ -1,0 +1,13 @@
+package com.example.utnspringbootpostman1;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class UtnSpringbootPostman1ApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
