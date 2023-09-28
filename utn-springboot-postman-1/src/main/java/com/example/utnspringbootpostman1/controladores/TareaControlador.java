@@ -36,6 +36,11 @@ public class TareaControlador {
         return tareaServicio.actualizarTarea(id, tarea);
     }
 
+    @PutMapping("/{id}")
+    public Tarea marcarTareaCompleta(@PathVariable("id") int id, @RequestBody Tarea tarea){
+        return tareaServicio.marcarTareaComoCompleta(id, tarea);
+    }
+
     @DeleteMapping("/{id}")
     public boolean eliminarTarea(@PathVariable("id") int id){
         return tareaServicio.eliminarTarea(id);
