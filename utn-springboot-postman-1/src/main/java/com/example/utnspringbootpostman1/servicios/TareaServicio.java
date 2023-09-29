@@ -27,11 +27,9 @@ public class TareaServicio {
     }
 
     public Tarea actualizarTarea (int id, Tarea tarea){
-        int index = 0;
-        for(Tarea tarea1 : listaDeTareas){
-            if(tarea1.getId() == id){
-                tarea.setId(id);
-                listaDeTareas.set(index, tarea);
+        for(int i = 0; i<listaDeTareas.size(); i++){
+            if(listaDeTareas.get(i).getId() == id){
+                listaDeTareas.set(i, tarea);
             }
         }
         return tarea;

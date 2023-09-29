@@ -36,7 +36,7 @@ public class TareaControlador {
         return tareaServicio.actualizarTarea(id, tarea);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/completarTarea/{id}")
     public Tarea marcarTareaCompleta(@PathVariable("id") int id, @RequestBody Tarea tarea){
         return tareaServicio.marcarTareaComoCompleta(id, tarea);
     }
