@@ -45,7 +45,7 @@ public class PrendaRopaControlador {
 
 
     // --- métodos para el CLIENTE:
-    // establecer el numero
+    // (establecer el numero de porcentaje de aumento deseado)
     @GetMapping("/cliente/ver")
     public ArrayList<PrendaRopa> verPrendasComoCliente() {
         return prendaRopaServicio.verTodasConPrecioFinal(50);

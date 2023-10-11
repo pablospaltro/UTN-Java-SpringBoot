@@ -1,0 +1,28 @@
+| tiendaDeRopa |
+
+JSON de ejemplo para agregar al carrito:
+
+* POST * 			localhost:8080/carrito/agregar
+
+
+{
+    "id":1,
+    "nombre":"Roberto Perez",
+    "telefono": 2234567890,
+    "metodoDePago": "Cuenta DNI",
+    "carrito": [
+    {
+      "id": 1,
+      "cliente": {
+        "id": 1
+      },
+      "prendaComprada": {
+        "id": 1,
+        "nombre": "remera cuello redondo blanca",
+        "stock": 100,
+        "precio": 4500
+      },
+      "cantidadComprada": 2
+    }
+    ]
+}
