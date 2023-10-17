@@ -6,6 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Entity
 @Table(name = "compras")
 @AllArgsConstructor
@@ -18,12 +23,10 @@ public class Compra {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    @ManyToOne
-    private PrendaRopa prendaComprada;
-
-    private int cantidadComprada;
-
+    @OneToMany(mappedBy = "compra")
+    private List<CompraItem> items = new ArrayList<>();
 }

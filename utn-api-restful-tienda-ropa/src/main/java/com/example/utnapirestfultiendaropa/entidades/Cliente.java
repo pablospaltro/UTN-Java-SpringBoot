@@ -20,11 +20,9 @@ public class Cliente {
     private Long id;
 
     private String nombre;
-    private int telefono;
+    private String telefono;
     private String metodoDePago;
 
-    @OneToMany(mappedBy = "cliente")
-    private List<Compra> carrito;
-
-
+    @OneToOne(mappedBy = "cliente")
+    private Compra carrito;
 }

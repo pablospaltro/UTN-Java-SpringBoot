@@ -15,8 +15,5 @@ public class ClienteServicio {
     @Autowired
     ClienteRepositorio clienteRepositorio;
 
-
-    public Cliente guardarDatosDeCompra(Cliente cliente) {
-        return clienteRepositorio.save(cliente);
-    }
+    //CRUD de Cliente, sin pasar informacion aun sobre Compra
 }
