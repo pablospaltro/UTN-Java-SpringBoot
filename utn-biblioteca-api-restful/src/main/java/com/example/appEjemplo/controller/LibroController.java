@@ -1,9 +1,9 @@
 package com.example.appEjemplo.controller;
 
 import com.example.appEjemplo.dto.LibroDTO;
-import com.example.appEjemplo.model.Libro;
-import com.example.appEjemplo.model.ModelResponseLista;
-import com.example.appEjemplo.service.LibroService;
+import com.example.appEjemplo.entities.Libro;
+import com.example.appEjemplo.entities.ModelResponseLista;
+import com.example.appEjemplo.services.LibroService;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
-//@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/biblioteca")
 public class LibroController {
 
     @Autowired
@@ -50,7 +49,7 @@ public class LibroController {
             Libro libro = libroserv.getById(id).get();
             return ResponseEntity.status(HttpStatus.OK).body(libro);
         } catch (Exception e){
-
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 

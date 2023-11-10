@@ -2,6 +2,8 @@ package com.example.appEjemplo.dto;
 
 import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
+
+import com.example.appEjemplo.entities.Autor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +15,7 @@ public class LibroDTO implements Serializable{
     private String nombre;
     
     @NotBlank
-    private String autor;
+    private Autor autor;
     
     @NotBlank
     private String editorial;
@@ -30,7 +32,7 @@ public class LibroDTO implements Serializable{
     public LibroDTO() {
     }
 
-    public LibroDTO(String nombre, String autor, String editorial, int anio, boolean fueLeido, String formato) {
+    public LibroDTO(String nombre, Autor autor, String editorial, int anio, boolean fueLeido, String formato) {
         this.nombre = nombre;
         this.autor = autor;
         this.editorial = editorial;
