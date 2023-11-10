@@ -5,6 +5,8 @@ import com.example.appEjemplo.entities.Libro;
 import com.example.appEjemplo.entities.ModelResponseLista;
 import com.example.appEjemplo.services.LibroService;
 import java.util.List;
+
+import com.example.appEjemplo.services.UsuarioService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +26,16 @@ public class LibroController {
 
     @Autowired
     private LibroService libroserv;
+    // metodos como "/bibliotecario"
+    // accede o modifica informacion
 
-    @GetMapping("/libro/vertodos")
-    public ResponseEntity<ModelResponseLista> list() {
+    @Autowired
+    private UsuarioService usuarioService;
+    // metodos como "/lector"
+    // ve los libros disponibles, pide prestado libros, su situacion como prestatario
+
+    @GetMapping("/bibliotecario/libro/vertodos")
+    public ResponseEntity<ModelResponseLista> biblioVerTodosLibros() {
         try{
             List<Libro> list = libroserv.list();
             return ResponseEntity.status(HttpStatus.OK).body(new ModelResponseLista("Operación exitosa.", list));
@@ -36,15 +45,8 @@ public class LibroController {
         }
     }
 
-    @GetMapping("/libro/ver/{id}")
-    public ResponseEntity<Libro> getById(@PathVariable("id") int id) {
-        /*
-        if (!libroserv.existsById(id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        Libro libro = libroserv.getById(id).get();
-        return ResponseEntity.status(HttpStatus.OK).body(libro);
-        */
+    @GetMapping("/bibliotecario/libro/ver/{id}")
+    public ResponseEntity<Libro> biblioLibroVerPorId(@PathVariable("id") int id) {
         try{
             Libro libro = libroserv.getById(id).get();
             return ResponseEntity.status(HttpStatus.OK).body(libro);
@@ -53,8 +55,8 @@ public class LibroController {
         }
     }
 
-    @DeleteMapping("/libro/borrar/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") int id) {
+    @DeleteMapping("/bibliotecario/libro/borrar/{id}")
+    public ResponseEntity<?> eliminarLibro(@PathVariable("id") int id) {
         if (!libroserv.existsById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -62,8 +64,8 @@ public class LibroController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PostMapping("/libro/crear")
-    public ResponseEntity<?> create(@RequestBody LibroDTO dtolibro) {
+    @PostMapping("/bibliotecario/libro/crear")
+    public ResponseEntity<?> crearLibro(@RequestBody LibroDTO dtolibro) {
         if (StringUtils.isBlank(dtolibro.getNombre())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -79,8 +81,8 @@ public class LibroController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/libro/editar/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody LibroDTO dtolibro) {
+    @PutMapping("/bibliotecario/libro/editar/{id}")
+    public ResponseEntity<?> actualizarLibro(@PathVariable("id") int id, @RequestBody LibroDTO dtolibro) {
 
         if (!libroserv.existsById(id)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -105,6 +107,30 @@ public class LibroController {
         libroserv.save(libro);
         return ResponseEntity.status(HttpStatus.OK).build();
 
+    }
+
+
+    // LECTOR:
+
+    @GetMapping("/lector/libro/vertodos")
+    public ResponseEntity<ModelResponseLista> lectorVerTodosLibros() {
+        try{
+            List<Libro> list = libroserv.list();
+            return ResponseEntity.status(HttpStatus.OK).body(new ModelResponseLista("Operación exitosa.", list));
+        } catch (Exception e){
+            List<Libro> list = null;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ModelResponseLista("No se encontraron libros", list));
+        }
+    }
+
+    @GetMapping("/bibliotecario/libro/ver/{id}")
+    public ResponseEntity<Libro> lectorLibroVerPorId(@PathVariable("id") int id) {
+        try{
+            Libro libro = libroserv.getById(id).get();
+            return ResponseEntity.status(HttpStatus.OK).body(libro);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 }
